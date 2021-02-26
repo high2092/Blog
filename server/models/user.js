@@ -3,12 +3,6 @@ const Sequelize = require('sequelize');
 module.exports = class User extends Sequelize.Model {
   static init(sequelize){
     return super.init({
-      // ID
-      id: {
-        type: Sequelize.INTEGER,
-        autoIncrement: true,
-        primaryKey: true
-      },
       // 회원 ID
       user_id: {
         type: Sequelize.STRING(20),
@@ -20,7 +14,7 @@ module.exports = class User extends Sequelize.Model {
         type: Sequelize.STRING(100),
         allowNull: true,
       },
-      // 프로필 이름 (중복 불가, NULL 허용)
+      // 프로필 이름
       profile_name: {
         type: Sequelize.STRING(20),
         unique: true,
@@ -40,22 +34,56 @@ module.exports = class User extends Sequelize.Model {
       blog_title: {
         type: Sequelize.STRING(20),
         allowNull: false,
+      },
+      /* 연동된 SNS
+      - local: 기본 회원가입으로 생성된 계정
+      - facebook: 페이스북 연동으로 생성된 계정
+      - google: 구글 연동으로 생성된 계정
+      */
+      provider: {
+        type: Sequelize.STRING(15),
+        allowNull: false
       }
-  }, {
-    sequelize,
-    timestamps: true,
-    underscored: false,
-    modelName: 'User',
-    paranoid: true,
-    charset: 'utf8',
-    collate: 'utf8_general_ci'
-  });
+    }, {
+      sequelize,
+      underscored: true,
+      modelName: 'User',
+      paranoid: true,
+      charset: 'utf8mb4',
+      collate: 'utf8mb4_general_ci'
+    });
   }
 
   static associate(db){
+    // 팔로우 릴레이션 (유저, 유저)
     db.User.belongsToMany(db.User, {
-      foreignKey: 'following_id',
+      foreignKey: 'follower_id',
+      as: "Following",
       through: 'Follow'
     });
+    // 팔로우 릴레이션 (유저, 유저)
+    db.User.belongsToMany(db.User, {
+      foreignKey: 'following_id',
+      as: "Follower",
+      through: 'Follow'
+    });
+    // 댓글 좋아요 릴레이션 (유저, 댓글)
+    db.User.belongsToMany(db.Comment, {
+      through: 'CommentLike',
+      onDelete: 'CASCADE',
+      onUpdate: 'NO ACTION'
+    });
+    // 게시글 좋아요 릴레이션 (유저, 게시글)
+    db.User.belongsToMany(db.Article, {
+      through: 'ArticleLike',
+      onDelete: 'CASCADE',
+      onUpdate: 'NO ACTION'
+    });
+    db.User.hasOne(db.UserOptions);
+    db.User.hasMany(db.Comment);
+    db.User.hasMany(db.Article);
+    db.User.hasMany(db.Category);
+    db.User.hasMany(db.Template);
+    db.User.hasMany(db.VisitLog);
   }
 }
