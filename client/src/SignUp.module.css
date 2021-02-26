@@ -20,6 +20,7 @@
 
 .small {
   width: 11rem;
+  display: inline;
 }
 
 .button {
@@ -32,4 +33,13 @@
 
 .button:hover {
   background-color: rgb(204, 231, 255);
+}
+
+.chk {
+  vertical-align: 0.5rem;
+  width: 4rem;
+  height: 2.7rem;
+  padding: 0rem 1rem;
+  margin: 0;
+  font-size: 0.7rem;
 }
