@@ -43,3 +43,9 @@
   margin: 0;
   font-size: 0.7rem;
 }
+
+.helperText {
+  display: none;
+  color: red;
+  font-size: 0.7rem;
+}

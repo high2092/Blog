@@ -3,6 +3,14 @@ import axios from 'axios';
 import style from './SignUp.module.css';
 
 function SignUp() {
+  const turnHelperTextVisibility = () => {
+    var Ele = document.getElementsByClassName(style.helperText)[0];
+    if (password !== passwordChk) {
+      Ele.style.display = 'block';
+    } else {
+      Ele.style.display = 'none';
+    }
+  }
 
   const [email, setEmail] = useState("");
   const emailHandler = (e) => {
@@ -77,9 +85,10 @@ function SignUp() {
         <button type="button" className={`${style.chk} ${style.button}`}>중복 확인</button>
       </div>
       <label htmlFor="password">비밀번호</label>
-      <input className={style.input} type="password" id="password" onChange={passwordHandler}></input>
+      <input className={style.input} type="password" id="password" onChange={passwordHandler} onBlur={turnHelperTextVisibility}></input>
       <label htmlFor="chk-password">비밀번호 확인</label>
-      <input className={style.input} type="password" id="chk-password" onChange={passwordChkHandler}></input>
+      <input className={style.input} type="password" id="chk-password" onChange={passwordChkHandler} onBlur={turnHelperTextVisibility}></input>
+      <div className={style.helperText}>비밀번호가 일치하지 않습니다.</div>
       <label htmlFor="nickname">닉네임</label>
       <div>
         <input className={`${style.input} ${style.small}`} type="text" id="nickname" onChange={nicknameHandler}></input>
