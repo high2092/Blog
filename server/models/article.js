@@ -14,31 +14,30 @@ module.exports = class Article extends Sequelize.Model{
         allowNull: false
       },
       // 비공개 여부
-      option_public: {
+      optionPublic: {
         type: Sequelize.BOOLEAN,
         allowNull: false
       },
       // 예약발행 시간
-      reserved_at: {
+      reservedAT: {
         type: Sequelize.DATE,
         allowNull: true
       },
       // 좋아요 수
-      like_count: { type: Sequelize.INTEGER }
+      likeCount: { type: Sequelize.INTEGER }
     }, {
       sequelize,
       modelName: 'Article',
       paranoid: true,
       charset: 'utf8mb4',
-      collate: 'utf8mb4_general_ci',
-      underscored: true
+      collate: 'utf8mb4_general_ci'
     });
   }
 
   static associate(db){
     // author_id : 작성자 ID
     db.Article.belongsTo(db.User, {
-      foriegnKey: 'author_id',
+      foriegnKey: 'authorID',
       onDelete: 'CASCADE',
       onUpdate: 'NO ACTION',
       allowNull: false

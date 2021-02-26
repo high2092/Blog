@@ -4,22 +4,22 @@ module.exports = class UserOptions extends Sequelize.Model {
   static init(sequelize){
     return super.init({
       // 댓글 알림 설정
-      comment_notice: {
+      commentNotice: {
         type: Sequelize.BOOLEAN,
         defaultValue: true,
       },
       // 게시글 좋아요 알림 설정
-      article_like_notice: {
+      articleLikeNotice: {
         type: Sequelize.BOOLEAN,
         defaultValue: true,
       },
       // 팔로우 알림 설정
-      follow_notice: {
+      followNotice: {
         type: Sequelize.BOOLEAN,
         defaultValue: true,
       },
       // 팔로잉 게시글 등록 알림 설정
-      following_article_notice: {
+      followingArticleNotice: {
         type: Sequelize.BOOLEAN,
         defaultValue: true,
       },
@@ -28,8 +28,7 @@ module.exports = class UserOptions extends Sequelize.Model {
       modelName: 'UserOptions',
       timestamps: false,
       charset: 'utf8',
-      collate: 'utf8_general_ci',
-      underscored: true
+      collate: 'utf8_general_ci'
     })
   }
 

@@ -11,14 +11,13 @@ module.exports = class VisitLog extends Sequelize.Model{
         unique: true
       },
       // 방문 횟수
-      visit_count: { type: Sequelize.INTEGER }
+      visitㅊount: { type: Sequelize.INTEGER }
     }, {
       sequelize,
       modelName: 'VisitLog',
       timestamps: false,
       charset: 'utf8',
-      collate: 'utf8_general_ci',
-      underscored: true
+      collate: 'utf8_general_ci'
     });
   }
 

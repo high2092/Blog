@@ -4,13 +4,13 @@ module.exports = class HashTag extends Sequelize.Model {
   static init(sequelize){
     return super.init({
       // 태그 이름
-      tag_name: {
+      tagName: {
         type: Sequelize.STRING(20),
         allowNull: false,
         unique: true
       },
       // 모든 유저들의 게시글에 태그 사용된 총 합 횟수
-      tag_used_count: {
+      tagUsedCount: {
         type: Sequelize.INTEGER,
       }
     }, {
@@ -18,8 +18,7 @@ module.exports = class HashTag extends Sequelize.Model {
       modelName: 'HashTag',
       paranoid: true,
       charset: 'utf8mb4',
-      collate: 'utf8mb4_general_ci',
-      underscored: true
+      collate: 'utf8mb4_general_ci'
     });
   }
 

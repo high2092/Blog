@@ -9,9 +9,8 @@ module.exports = class Comment extends Sequelize.Model {
         allowNull: false
       },
       // 좋아요 수
-      like_count: { type: Sequelize.INTEGER }
+      likeCount: { type: Sequelize.INTEGER }
     }, {
-      underscored: true,
       sequelize,
       modelName: 'Comment',
       paranoid: true,
@@ -27,13 +26,13 @@ module.exports = class Comment extends Sequelize.Model {
       allowNull: false
     });
     db.Comment.belongsTo(db.User, {
-      foriegnKey: 'writer_id',
+      foriegnKey: 'writerID',
       onDelete: 'CASCADE',
       onUpdate: 'NO ACTION',
       allowNull: false
     });
     db.Comment.belongsTo(db.Comment, {
-      foriegnKey: 'replied_about',
+      foriegnKey: 'repliedAbout',
       onDelete: 'NO ACTION',
       onUpdate: 'NO ACTION',
       allowNull: true

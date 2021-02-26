@@ -14,8 +14,7 @@ module.exports = class Category extends Sequelize.Model{
       modelName: 'Category',
       paranoid: true,
       charset: 'utf8',
-      collate: 'utf8_general_ci',
-      underscored: true
+      collate: 'utf8_general_ci'
     });
   }
 
@@ -28,7 +27,7 @@ module.exports = class Category extends Sequelize.Model{
     });
     // default_template_id : 카테고리 기본 템플릿 ID
     db.Category.belongsTo(db.Template, {
-      foreignKey: 'default_template_id',
+      foreignKey: 'defaultTemplateID',
       onDelete: 'CASCADE',
       onUpdate: 'NO ACTION',
       allowNull: true

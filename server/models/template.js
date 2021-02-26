@@ -24,8 +24,7 @@ module.exports = class Template extends Sequelize.Model{
       modelName: 'Template',
       paranoid: true,
       charset: 'utf8',
-      collate: 'utf8_general_ci',
-      underscored: true
+      collate: 'utf8_general_ci'
     });
   }
 
