@@ -1,6 +1,6 @@
 import React, {useState} from 'react';
 import axios from 'axios';
-import './SignUp.css';
+import style from './SignUp.module.css';
 
 function SignUp() {
 
@@ -70,17 +70,17 @@ function SignUp() {
 
   }
   return (
-    <form method="post" className="container" onSubmit={submitHandler}>
+    <form method="post" className={style.container} onSubmit={submitHandler}>
       <label htmlFor="sign-up-with-email">이메일로 회원가입</label>
-      <input type="text" value={email} placeholder="이메일을 입력하세요." id="sign-up-with-email" onChange={emailHandler}></input>
+      <input className={`${style.input} ${style.small}`} type="text" value={email} placeholder="이메일을 입력하세요." id="sign-up-with-email" onChange={emailHandler}></input>
       <label htmlFor="password">비밀번호</label>
-      <input type="password" id="password" onChange={passwordHandler}></input>
+      <input className={style.input} type="password" id="password" onChange={passwordHandler}></input>
       <label htmlFor="chk-password">비밀번호 확인</label>
-      <input type="password" id="chk-password" onChange={passwordChkHandler}></input>
+      <input className={style.input} type="password" id="chk-password" onChange={passwordChkHandler}></input>
       <label htmlFor="nickname">닉네임</label>
-      <input type="text" id="nickname" onChange={nicknameHandler}></input>
+      <input className={`${style.input} ${style.small}`} type="text" id="nickname" onChange={nicknameHandler}></input>
 
-      <button type="submit">회원가입</button>
+      <button className={style.button} type="submit">회원가입</button>
     </form>
   );
 }

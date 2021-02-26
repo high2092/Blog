@@ -5,12 +5,12 @@
   border-radius: 0.5rem;
 }
 
-input, button {
+.input, .button {
   font-size: 1rem;
   padding: 0.7rem;
   border-radius: 0.2rem;
 }
-input {
+.input {
   /* css 적용 우선순위 실험 */
   display: block;
   width: 15rem;
@@ -18,7 +18,11 @@ input {
   border: 1px solid rgba(0, 0, 0, 0.2);
 }
 
-button {
+.small {
+  width: 11rem;
+}
+
+.button {
   margin: 0.5rem 0;
   width: 16.5rem;
   background-color: rgb(221, 239, 255);
@@ -26,6 +30,6 @@ button {
   outline: none;
 }
 
-button:hover {
+.button:hover {
   background-color: rgb(204, 231, 255);
 }
