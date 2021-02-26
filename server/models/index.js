@@ -6,6 +6,7 @@ const HashTag = require('./hash_tag');
 const Template = require('./template');
 const UserOptions = require('./user_options');
 const User = require('./user');
+const AuthToken = require('./auth_token');
 const VisitLog = require('./visit_log');
 
 const env = process.env.NODE_ENV || 'development';
@@ -24,6 +25,7 @@ db.HashTag = HashTag;
 db.Template = Template;
 db.UserOptions = UserOptions;
 db.User = User;
+db.AuthToken = AuthToken;
 db.VisitLog = VisitLog;
 
 Article.init(sequelize);
@@ -33,6 +35,7 @@ HashTag.init(sequelize);
 Template.init(sequelize);
 UserOptions.init(sequelize);
 User.init(sequelize);
+AuthToken.init(sequelize);
 VisitLog.init(sequelize);
 
 Article.associate(db);

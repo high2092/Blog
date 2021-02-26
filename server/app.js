@@ -1,5 +1,13 @@
 const express = require('express');
+
+const dotenv = require('dotenv');
+
+dotenv.config();
+
+const registerRouter = require('./routes/register');
+
 const { sequelize } = require('./models');
+
 
 const app = express();
 
@@ -12,6 +20,8 @@ sequelize.sync({ force: false })
   }).catch(err => {
     console.log(err);
   });
+
+app.use('/register', registerRouter);
 
 app.get('/', (req, res) => {
     res.send('success');
