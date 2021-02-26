@@ -5,11 +5,23 @@ import style from './SignUp.module.css';
 function SignUp() {
   const turnHelperTextVisibility = () => {
     var Ele = document.getElementsByClassName(style.helperText)[0];
-    if (password !== passwordChk) {
+    if (passwordChk !== '' && password !== passwordChk) {
       Ele.style.display = 'block';
     } else {
       Ele.style.display = 'none';
     }
+  }
+
+  const chkEmail = () => {
+    axios.post('/register/check/email', {
+      email: email
+    })
+  }
+
+  const chkProfileName = () => {
+    axios.post('/register/check/profile-name', {
+      profileName: profileName
+    })
   }
 
   const [email, setEmail] = useState("");
@@ -29,10 +41,10 @@ function SignUp() {
     setPasswordChk(e.target.value);
   }
 
-  const [nickname, setNickname] = useState("");
-  const nicknameHandler = (e) => {
+  const [profileName, setProfileName] = useState("");
+  const profileNameHandler = (e) => {
     e.preventDefault();
-    setNickname(e.target.value);
+    setProfileName(e.target.value);
   }
 
   const submitHandler = (e) => {
@@ -53,11 +65,11 @@ function SignUp() {
     if (password !== passwordChk) {
       alertStr += `${++cnt}. 비밀번호가 맞지 않습니다.\n`;
     }
-    if (nickname.length > 12) {
+    if (profileName.length > 12) {
       alertStr += `${++cnt}. 닉네임은 12자 이하여야 합니다.\n`;
     }
-    var nicknameFormat = /^[가-힣a-zA-Z]+$/;
-    if (!nicknameFormat.test(nickname)) {
+    var profileNameFormat = /^[가-힣a-zA-Z]+$/;
+    if (!profileNameFormat.test(profileName)) {
       alertStr += `${++cnt}. 닉네임은 한글과 영어로만 이루어져야 합니다.\n`;
     }
 
@@ -67,13 +79,15 @@ function SignUp() {
       이메일: ${email}
       비밀번호: ${password}
       비밀번호 확인: ${passwordChk}
-      닉네임: ${nickname}
+      닉네임: ${profileName}
     `
     );
 
+    // template
     axios.post('/register/check', {
-      nickname: "lolmc",
-      email: "lsh000805@naver.com"
+      email: email,
+      password: password,
+      profileName: profileName
     })
 
   }
@@ -82,17 +96,17 @@ function SignUp() {
       <label htmlFor="sign-up-with-email">이메일로 회원가입</label>
       <div>
         <input className={`${style.input} ${style.small}`} type="text" value={email} placeholder="이메일을 입력하세요." id="sign-up-with-email" onChange={emailHandler}></input>
-        <button type="button" className={`${style.chk} ${style.button}`}>중복 확인</button>
+        <button type="button" className={`${style.chk} ${style.button}`} onClick={chkEmail}>중복 확인</button>
       </div>
       <label htmlFor="password">비밀번호</label>
       <input className={style.input} type="password" id="password" onChange={passwordHandler} onBlur={turnHelperTextVisibility}></input>
       <label htmlFor="chk-password">비밀번호 확인</label>
       <input className={style.input} type="password" id="chk-password" onChange={passwordChkHandler} onBlur={turnHelperTextVisibility}></input>
       <div className={style.helperText}>비밀번호가 일치하지 않습니다.</div>
-      <label htmlFor="nickname">닉네임</label>
+      <label htmlFor="profile-name">닉네임</label>
       <div>
-        <input className={`${style.input} ${style.small}`} type="text" id="nickname" onChange={nicknameHandler}></input>
-        <button type="button" className={`${style.chk} ${style.button}`}>중복 확인</button>
+        <input className={`${style.input} ${style.small}`} type="text" id="profile-name" onChange={profileNameHandler}></input>
+        <button type="button" className={`${style.chk} ${style.button}`} onClick={chkProfileName}>중복 확인</button>
       </div>
 
       <button className={style.button}>회원가입</button>
