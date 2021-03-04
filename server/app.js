@@ -7,8 +7,6 @@ dotenv.config();
 const registerRouter = require('./routes/register');
 
 const { sequelize } = require('./models');
-const bodyParser = require('body-parser');
-
 
 const app = express();
 
@@ -22,7 +20,8 @@ sequelize.sync({ force: false })
     console.log(err);
   });
 
-app.use(bodyParser.json());
+app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
 
 app.use('/register', registerRouter);
 

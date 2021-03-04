@@ -21,13 +21,12 @@ module.exports = {
       html: `<div>아래 링크로 접속하여 인증해주세요.</div>
         <div>http://localhost:${3000}/auth/?token=${token}</div>`
     };
-    smtpTransport.sendMail(mailOptions)
-    .then(() => {
+    try {
+      await smtpTransport.sendMail(mailOptions);
       return { success: true, message: "성공적으로 메일이 발송되었습니다." };
-    })
-    .catch(err => {
+    } catch (err) {
       return { success: false, message: err };
-    });
+    }
   },
   
   testIsValidEmail : (email) => {
@@ -72,7 +71,7 @@ module.exports = {
     let range = 10 + 26 + 26; 
     for (let i = 0; i < 12; i++){
       // (0, range] 까지 랜덤 값 추출
-      let random = Math.floor(Math.random() * (range + 1));
+      let random = Math.floor(Math.random() * range);
       // 36 ~ 61까지 A ~ Z로 설정
       if (random >= 36) {
         token += String.fromCharCode('A'.charCodeAt(0) + random - 36);
