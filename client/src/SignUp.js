@@ -86,8 +86,8 @@ function SignUp() {
     // template
     axios.post('/register/check', {
       email: email,
-      password: password,
-      profileName: profileName
+      password: password
+      // profileName: profileName
     })
 
   }

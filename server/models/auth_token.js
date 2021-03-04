@@ -14,12 +14,7 @@ module.exports = class AuthToken extends Sequelize.Model {
         type: Sequelize.STRING(100),
         allowNull: true
       },
-      // 프로필 이름
-      profileName: {
-        type: Sequelize.STRING(12),
-        unique: true,
-        allowNull: false
-      },
+      // 인증 토큰
       token: {
         type: Sequelize.STRING(40),
         unique: true,

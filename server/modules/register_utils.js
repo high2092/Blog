@@ -1,5 +1,6 @@
 const nodemailer = require('nodemailer');
 const dotenv = require('dotenv');
+const { User } = require('../models');
 
 dotenv.config();
 
@@ -29,15 +30,20 @@ module.exports = {
     }
   },
   
-  testIsValidEmail : (email) => {
+  checkIsAvailableEmail : async (email) => {
     const emailRegEx = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
     if (!emailRegEx.test(String(email).toLowerCase())){
       return { success: false, message: "올바른 이메일 형식이 아닙니다." };
     }
+    const checkEmailUserExist = await User.findOne({ where: { userID: email }});
+    // 이미 동일 이메일 사용자가 존재할 경우
+    if (checkEmailUserExist) {
+      return { success: false, message: "이미 가입된 이메일 주소입니다." };
+    }
     return { success: true, message: "사용가능한 이메일입니다." };
   },
   
-  testIsValidPassword : (password) => {
+  checkIsAvailablePassword : async (password) => {
     if (password.length < 8) {
       return { success: false, message: "비밀번호는 최소 8글자 이상이어야 합니다." };
     }
@@ -51,19 +57,24 @@ module.exports = {
     return { success: true, message: "사용가능한 비밀번호입니다." };
   },
   
-  testIsValidProfileName : (profileName) => {
-    if (profileName.length < 1) {
-      return { success: false, message: "프로필 이름은 최소 1글자 이상이어야 합니다." };
-    }
-    if (profileName.length > 12) {
-      return { success: false, message: "프로필 이름은 최대 12글자 이하여야 합니다." };
-    }
-    let profileNameRegEx = /[ㄱ-ㅎ|ㅏ-ㅣ|가-힣a-zA-Z0-9!@#$%^&*]$/;
-    if (!profileNameRegEx.test(profileName)) {
-      return { success: false, message: "프로필 이름은 한글, 영문, 숫자, 특수문자(!@#$%^&*)만 포함 가능합니다." };
-    }
-    return { success: true, message: "사용가능한 프로필 이름입니다." };
-  },
+  // checkIsAvailableProfileName : async (profileName) => {
+  //   if (profileName.length < 1) {
+  //     return { success: false, message: "프로필 이름은 최소 1글자 이상이어야 합니다." };
+  //   }
+  //   if (profileName.length > 12) {
+  //     return { success: false, message: "프로필 이름은 최대 12글자 이하여야 합니다." };
+  //   }
+  //   let profileNameRegEx = /[ㄱ-ㅎ|ㅏ-ㅣ|가-힣a-zA-Z0-9!@#$%^&*]$/;
+  //   if (!profileNameRegEx.test(profileName)) {
+  //     return { success: false, message: "프로필 이름은 한글, 영문, 숫자, 특수문자(!@#$%^&*)만 포함 가능합니다." };
+  //   }
+  //   const checkProfileNameUserExist = await User.findOne({ where: { profileName }});
+  //   // 이미 동일 프로필 이름 사용자가 존재할 경우
+  //   if (checkProfileNameUserExist) {
+  //     return { success: false, message: "이미 사용중인 닉네임입니다."};
+  //   }
+  //   return { success: true, message: "사용가능한 프로필 이름입니다." };
+  // },
   
   createToken : () => {
     let token = "";
