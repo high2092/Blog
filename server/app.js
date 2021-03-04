@@ -7,6 +7,7 @@ dotenv.config();
 const registerRouter = require('./routes/register');
 
 const { sequelize } = require('./models');
+const bodyParser = require('body-parser');
 
 
 const app = express();
@@ -21,12 +22,14 @@ sequelize.sync({ force: false })
     console.log(err);
   });
 
+app.use(bodyParser.json());
+
 app.use('/register', registerRouter);
 
 app.get('/', (req, res) => {
     res.send('success');
 });
 
-app.listen(8001, () => {
+app.listen(app.get('port'), () => {
     console.log('대기중');
 });

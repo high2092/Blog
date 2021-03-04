@@ -5,7 +5,8 @@ const registerUtils = require('../modules/register_utils');
 
 const router = express.Router();
 
-router.post('/check/email', async (req, res, next) => {
+
+router.post('/check/token', async (req, res, next) => {
   const { token } = req.body;
   try {
     const userInform = await AuthToken.findOne({ where: { token }});
@@ -25,6 +26,7 @@ router.post('/check/email', async (req, res, next) => {
 });
 
 router.post('/check', async (req, res, next) => {
+  console.log(req.body);
   const { email, password, profileName } = req.body;
   try {
     const checkEmailUserExist = await User.findOne({ where: { userID: email }});
@@ -53,11 +55,13 @@ router.post('/check', async (req, res, next) => {
     /* AuthToken에 이미 userID로 토큰 값을 발급 받았었을 경우엔 정보(비밀번호, 프로필 이름, 토큰값) 업데이트,
     처음 발급받는 것이라면 새로 추가 */
     await AuthToken
-    .findOne({ userID: email })
+    .findOne({ where: { userID: email }})
     .then(row => {
         // update
-        if (row)
-            return row.update(authTokenRow);
+        if (row){
+          console.log(row);
+          return row.update(authTokenRow);
+        }
         // insert
         return AuthToken.create(authTokenRow);
     });

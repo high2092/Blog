@@ -1,15 +1,14 @@
 const nodemailer = require('nodemailer');
 const dotenv = require('dotenv');
+
 dotenv.config();
 
 const smtpTransport = nodemailer.createTransport({
-    service: process.env.EMAIL_SERVICE,
+    service: 'gmail',
+    port: 465,
     auth: {
         user: process.env.EMAIL,
         pass: process.env.EMAIL_PASSWORD
-    },
-    tls: {
-        rejectUnauthorized: false
     }
   });
 
@@ -20,15 +19,14 @@ module.exports = {
       to: targetEmail,
       subject: "블로그 회원가입 인증 메일입니다.",
       html: `<div>아래 링크로 접속하여 인증해주세요.</div>
-        <div>http://localhost:${3000}/register/email-register/?token${token}</div>`
+        <div>http://localhost:${3000}/auth/?token=${token}</div>`
     };
-  
-    await smtpTransport.sendMail(mailOptions, (error, responses) => {
-        if (error) {
-          return res.send({success: false, message: error });
-        } else {
-          return res.send({success: true, message: "성공적으로 메일이 발송되었습니다."});
-        }
+    smtpTransport.sendMail(mailOptions)
+    .then(() => {
+      return { success: true, message: "성공적으로 메일이 발송되었습니다." };
+    })
+    .catch(err => {
+      return { success: false, message: err };
     });
   },
   
