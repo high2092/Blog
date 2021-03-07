@@ -75,25 +75,4 @@ module.exports = {
   //   }
   //   return { success: true, message: "사용가능한 프로필 이름입니다." };
   // },
-  
-  createToken : () => {
-    let token = "";
-    // 0 ~ 9, a ~ z, A ~ Z 범위 설정
-    let range = 10 + 26 + 26; 
-    for (let i = 0; i < 12; i++){
-      // (0, range] 까지 랜덤 값 추출
-      let random = Math.floor(Math.random() * range);
-      // 36 ~ 61까지 A ~ Z로 설정
-      if (random >= 36) {
-        token += String.fromCharCode('A'.charCodeAt(0) + random - 36);
-      // 10 ~ 35까지 a ~ z로 설정
-      } else if(random >= 10) {
-        token += String.fromCharCode('a'.charCodeAt(0) + random - 10);
-      // 0 ~ 9 까지 0 ~ 9로 설정
-      } else {
-        token += String(random);
-      }
-    }
-    return token;
-  }
 }
